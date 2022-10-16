@@ -21,15 +21,30 @@ class LoginScreenVC: UIViewController {
         
         let login = loginTF.text ?? ""
         let password = passwordTF.text ?? ""
+        let networkService = NetworkService()
+        loginTF.isEnabled = false
+        passwordTF.isEnabled = false
         
-        if loginCityAds(login: login, password: password) {
+        
+        networkService.login(login: login, password: password){ [weak self] result in
             
-            guard let mainVC = storyboard?.instantiateViewController(identifier: "main") as? TapBarVC else {
-                return
+            if result.success {
+                
+                guard let mainVC = self?.storyboard?.instantiateViewController(identifier: "main") as? TapBarVC else {
+                    return
+                }
+                mainVC.modalPresentationStyle = .fullScreen
+                mainVC.modalTransitionStyle = .flipHorizontal
+                self?.present(mainVC, animated: true)
+                
+            } else {
+                
+                print(result.message)
+                
             }
-            mainVC.modalPresentationStyle = .fullScreen
-            mainVC.modalTransitionStyle = .flipHorizontal
-            present(mainVC, animated: true)
+            self?.loginTF.isEnabled = true
+            self?.passwordTF.isEnabled = true
+            
         }
         
     }

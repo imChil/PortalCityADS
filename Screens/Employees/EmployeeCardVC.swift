@@ -24,6 +24,7 @@ class EmployeeCardVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         if let item = item {
             
             let arrayString = separateName(name: item.name)
@@ -37,14 +38,13 @@ class EmployeeCardVC: UIViewController {
                 }
             }
             
-            self.avatarImage.image       = item.avatar
+//            self.avatarImage.image       = item.avatar
             self.departmentLable.text    = "Подразделение: \(item.department)"
             self.jobNameLable.text       = "Должность: \(item.jobName)"
             self.emailLable.text         = "Email: \(item.email)"
             self.telegramLable.text      = "Telegram: \(item.telegram)"
             
         }
-        // Do any additional setup after loading the view.
     }
     
 

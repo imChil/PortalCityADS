@@ -9,8 +9,9 @@ import UIKit
 
 class EmployeeTableVC: UITableViewController {
     
-    
+    let networkService = NetworkService()
     private let searchEmployee = UISearchController(searchResultsController: nil)
+    private var employees = [Employee]()
     private var filtredEmployees = [Employee]()
     private var searchBarisempty: Bool {
         guard let text = searchEmployee.searchBar.text else {
@@ -25,6 +26,8 @@ class EmployeeTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 80
+        
+        getEmployees()
         
         searchEmployee.searchResultsUpdater = self
         searchEmployee.obscuresBackgroundDuringPresentation = false
@@ -42,14 +45,14 @@ class EmployeeTableVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return  isSearching ? filtredEmployees.count : MockService.employeeData.count
+        return  isSearching ? filtredEmployees.count : employees.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeCell.id, for: indexPath) as? EmployeeCell else {return UITableViewCell()}
         
-        let item = isSearching ? filtredEmployees[indexPath.row] : MockService.employeeData[indexPath.row]
+        let item = isSearching ? filtredEmployees[indexPath.row] : employees[indexPath.row]
         cell.setupItem(employee: item)
 
         return cell
@@ -59,7 +62,7 @@ class EmployeeTableVC: UITableViewController {
         if segue.identifier == "showEmployeeDetail" {
             if let vc = segue.destination as? EmployeeCardVC {
                 if let index = self.tableView.indexPathForSelectedRow {
-                    let item = isSearching ? filtredEmployees[index.row] : MockService.employeeData[index.row]
+                    let item = isSearching ? filtredEmployees[index.row] : employees[index.row]
                     vc.item = item
                 }
             }
@@ -74,10 +77,31 @@ extension EmployeeTableVC: UISearchResultsUpdating {
     }
     
     private func filterContent(_ searchText: String){
-        filtredEmployees = MockService.employeeData.filter({(employee: Employee) -> Bool in
+        filtredEmployees = employees.filter({(employee: Employee) -> Bool in
             return employee.name.lowercased().contains(searchText.lowercased()) || employee.jobName.lowercased().contains(searchText.lowercased())
         })
         tableView.reloadData()
     }
     
+}
+
+extension EmployeeTableVC {
+
+    private func getEmployees(){
+        networkService.getEmployees(){ [weak self] result in
+            
+            if result.success {
+                
+                DispatchQueue.main.async {
+                    self?.employees = result.data
+                    self?.tableView.reloadData()
+                }    
+                
+            } else {
+                
+                print(result.message)
+                
+            }
+        }
+    }
 }

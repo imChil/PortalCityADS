@@ -22,7 +22,7 @@
                                     <constraint firstAttribute="height" constant="30" id="hdG-tE-hjV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iKv-lL-wv3">
                                 <rect key="frame" x="175.5" y="437.5" width="63.5" height="31"/>
@@ -38,7 +38,7 @@
                                     <constraint firstAttribute="height" constant="30" id="TXT-Da-MwJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="username"/>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

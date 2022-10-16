@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-struct Employee {
+struct Employee: Codable {
     let name: String
     let jobName: String
     let department: String
     let email: String
     let telegram: String
-    let avatar: UIImage?
+    let avatar: String?
 }
