@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class HTTPBasicAuthenticationSessionTaskDelegate : NSObject, URLSessionTaskDelegate {
     
@@ -77,7 +78,20 @@ final class NetworkService : NetworkServiceProtocol {
                 }
             }
         }
+    }
+    
+    func getImage(id: String, completion: @escaping (UIImage) -> Void) {
         
+        let url = "https://1c.cityads.com/LF/hs/portal/emploeeimage?id=\(id)"
+        
+        request(url: url) { parsData in
+
+            if let image = UIImage(data: parsData) {
+                DispatchQueue.main.sync {
+                    completion(image)
+                }
+            }
+        }
     }
     
     

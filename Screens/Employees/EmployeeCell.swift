@@ -30,6 +30,7 @@ class EmployeeCell: UITableViewCell {
     func setupItem(employee: Employee){
         self.name.text = employee.name
         self.jobName.text = employee.jobName
+        self.avatarImage.image = employee.avatar
     }
     
 }

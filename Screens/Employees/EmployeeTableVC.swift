@@ -94,12 +94,26 @@ extension EmployeeTableVC {
                 
                 DispatchQueue.main.async {
                     self?.employees = result.data
+                    self?.getImages()
                     self?.tableView.reloadData()
-                }    
+                }
                 
             } else {
                 
                 print(result.message)
+                
+            }
+        }
+    }
+    
+    private func getImages(){
+        for (i, item) in self.employees.enumerated() {
+            networkService.getImage(id: item.id) {[weak self] result in
+
+                    DispatchQueue.main.async {
+                        self?.employees[i].avatar = result
+                        self?.tableView.reloadData()
+                        }
                 
             }
         }

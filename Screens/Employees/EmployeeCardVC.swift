@@ -9,6 +9,7 @@ import UIKit
 
 class EmployeeCardVC: UIViewController {
 
+    let network = NetworkService()
     
     @IBOutlet weak var lastNameLable: UILabel!
     @IBOutlet weak var nameLable: UILabel!
@@ -38,11 +39,15 @@ class EmployeeCardVC: UIViewController {
                 }
             }
             
-//            self.avatarImage.image       = item.avatar
+            
             self.departmentLable.text    = "Подразделение: \(item.department)"
             self.jobNameLable.text       = "Должность: \(item.jobName)"
             self.emailLable.text         = "Email: \(item.email)"
             self.telegramLable.text      = "Telegram: \(item.telegram)"
+            
+            network.getImage(id: item.id) { [weak self] image in
+                self?.avatarImage.image = image
+            }
             
         }
     }
