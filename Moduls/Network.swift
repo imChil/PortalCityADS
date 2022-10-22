@@ -27,11 +27,12 @@ class HTTPBasicAuthenticationSessionTaskDelegate : NSObject, URLSessionTaskDeleg
 protocol NetworkServiceProtocol {
     func login(login: String, password: String, completion: @escaping  (LoginResponse)->Void)
     func getEmployees(completion: @escaping  (EmployeesResponse)->Void)
+    func getImage(id: String, completion: @escaping (UIImage) -> Void)
 }
 
 final class NetworkService : NetworkServiceProtocol {
     
-    private var session = URLSession(configuration: URLSessionConfiguration.default, delegate: HTTPBasicAuthenticationSessionTaskDelegate(user:"1CBilling", password:"***"), delegateQueue: nil)
+    private var session = URLSession(configuration: URLSessionConfiguration.default, delegate: HTTPBasicAuthenticationSessionTaskDelegate(user:"p.chilin", password:"Chil66621*"), delegateQueue: nil)
     
     func request(url: String, completion: @escaping (Data) -> Void) {
         
@@ -113,7 +114,7 @@ struct EmployeesResponse: Codable {
     
     var success : Bool
     var message : String
-    var data : [Employee]
+    var data : [EmployeeCodable]
     
     enum CodingKeys : String, CodingKey {
         case success = "Success"

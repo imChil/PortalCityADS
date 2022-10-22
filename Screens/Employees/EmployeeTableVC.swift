@@ -9,6 +9,7 @@ import UIKit
 
 class EmployeeTableVC: UITableViewController {
     
+    let storageManager = StorageManager()
     let networkService = NetworkService()
     private let searchEmployee = UISearchController(searchResultsController: nil)
     private var employees = [Employee]()
@@ -35,26 +36,26 @@ class EmployeeTableVC: UITableViewController {
         navigationItem.searchController = searchEmployee
         definesPresentationContext = true
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return  isSearching ? filtredEmployees.count : employees.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeCell.id, for: indexPath) as? EmployeeCell else {return UITableViewCell()}
         
         let item = isSearching ? filtredEmployees[indexPath.row] : employees[indexPath.row]
         cell.setupItem(employee: item)
-
+        
         return cell
     }
     
@@ -68,7 +69,7 @@ class EmployeeTableVC: UITableViewController {
             }
         }
     }
-
+    
 }
 
 extension EmployeeTableVC: UISearchResultsUpdating {
@@ -86,36 +87,41 @@ extension EmployeeTableVC: UISearchResultsUpdating {
 }
 
 extension EmployeeTableVC {
-
+    
     private func getEmployees(){
         networkService.getEmployees(){ [weak self] result in
             
             if result.success {
                 
                 DispatchQueue.main.async {
-                    self?.employees = result.data
+                    self?.employees = convertEmployeeResult(employeeCodable: result.data)
                     self?.getImages()
                     self?.tableView.reloadData()
                 }
                 
             } else {
-                
                 print(result.message)
-                
             }
         }
     }
     
-    private func getImages(){
+    private func getImages() {
+        
         for (i, item) in self.employees.enumerated() {
-            networkService.getImage(id: item.id) {[weak self] result in
-
-                    DispatchQueue.main.async {
-                        self?.employees[i].avatar = result
-                        self?.tableView.reloadData()
-                        }
-                
+            
+            let image = storageManager.getImageEmployee(id: item.id)
+            
+            if image == nil {
+                networkService.getImage(id: item.id) {[weak self] image in
+                    if let dataImage = image.pngData() {
+                        self?.storageManager.saveImageEmployee(id: item.id, image: dataImage)
+                    }
+                    self?.employees[i].avatar = image
+                }
+            } else {
+                self.employees[i].avatar = image
             }
+            
         }
     }
 }

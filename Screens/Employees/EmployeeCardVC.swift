@@ -9,7 +9,8 @@ import UIKit
 
 class EmployeeCardVC: UIViewController {
 
-    let network = NetworkService()
+    let networkManager = NetworkService()
+    let storageManager = StorageManager()
     
     @IBOutlet weak var lastNameLable: UILabel!
     @IBOutlet weak var nameLable: UILabel!
@@ -28,40 +29,11 @@ class EmployeeCardVC: UIViewController {
         
         if let item = item {
             
-            let arrayString = separateName(name: item.name)
-            for (index, partName) in arrayString.enumerated() {
-                if index == 0 {
-                    self.lastNameLable.text = partName
-                } else if index == 1 {
-                    self.nameLable.text = partName
-                } else {
-                    self.secondNameLable.text = partName
-                }
-            }
-            
-            
-            self.departmentLable.text    = "Подразделение: \(item.department)"
-            self.jobNameLable.text       = "Должность: \(item.jobName)"
-            self.emailLable.text         = "Email: \(item.email)"
-            self.telegramLable.text      = "Telegram: \(item.telegram)"
-            
-            network.getImage(id: item.id) { [weak self] image in
-                self?.avatarImage.image = image
-            }
+            setupItem(item: item)
             
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     func separateName(name: String) -> [String] {
         
         let arraySubstring = name.split(separator: " ")
@@ -72,6 +44,39 @@ class EmployeeCardVC: UIViewController {
         }
         
         return result
+        
+    }
+    
+    func setupItem(item: Employee){
+        
+        let arrayString = separateName(name: item.name)
+        for (index, partName) in arrayString.enumerated() {
+            if index == 0 {
+                self.lastNameLable.text = partName
+            } else if index == 1 {
+                self.nameLable.text = partName
+            } else {
+                self.secondNameLable.text = partName
+            }
+        }
+        
+        self.departmentLable.text    = "Подразделение: \(item.department)"
+        self.jobNameLable.text       = "Должность: \(item.jobName)"
+        self.emailLable.text         = "Email: \(item.email)"
+        self.telegramLable.text      = "Telegram: \(item.telegram)"
+        
+        let image = storageManager.getImageEmployee(id: item.id)
+        
+        if image == nil {
+            networkManager.getImage(id: item.id) { [weak self] image in
+                if let dataImage = image.pngData() {
+                    self?.storageManager.saveImageEmployee(id: item.id, image: dataImage)
+                }
+                self?.avatarImage.image = image
+            }
+        } else {
+            self.avatarImage.image = image
+        }
         
     }
 
