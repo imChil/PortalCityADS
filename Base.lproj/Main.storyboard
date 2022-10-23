@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login ScreenVC-->
+        <!--LoginVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginScreenVC" customModule="PortalCityAds" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="LoginVC" customModule="PortalCityAds" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,15 +40,30 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" textContentType="username"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w3e-PD-Fw5">
+                                <rect key="frame" x="87" y="494" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="Hzb-ig-VHP"/>
+                                </constraints>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CAlogo" translatesAutoresizingMaskIntoConstraints="NO" id="uef-qf-vqP">
+                                <rect key="frame" x="87" y="80" width="240" height="180"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="w3e-PD-Fw5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="6rk-c7-4Al"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="w3e-PD-Fw5" secondAttribute="trailing" constant="87" id="CRD-lJ-3r1"/>
+                            <constraint firstItem="w3e-PD-Fw5" firstAttribute="top" secondItem="iKv-lL-wv3" secondAttribute="bottom" constant="25.5" id="ECh-NU-9VW"/>
+                            <constraint firstItem="uef-qf-vqP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="36" id="GqR-lt-l87"/>
                             <constraint firstItem="iKv-lL-wv3" firstAttribute="top" secondItem="JtB-G4-SlD" secondAttribute="bottom" constant="35.5" id="MiB-ub-Vpk"/>
                             <constraint firstItem="foS-PP-f2t" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.4" id="PBe-KP-cvx"/>
                             <constraint firstItem="JtB-G4-SlD" firstAttribute="width" secondItem="foS-PP-f2t" secondAttribute="width" id="Sfu-nB-4TW"/>
                             <constraint firstItem="iKv-lL-wv3" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="TXI-RX-GaL"/>
                             <constraint firstItem="foS-PP-f2t" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XNU-W4-fEh"/>
+                            <constraint firstItem="uef-qf-vqP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="aoA-Bz-Eze"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uef-qf-vqP" secondAttribute="trailing" constant="87" id="dyQ-M4-AQ8"/>
                             <constraint firstItem="JtB-G4-SlD" firstAttribute="leading" secondItem="foS-PP-f2t" secondAttribute="leading" id="mKm-Vn-SjW"/>
                             <constraint firstItem="JtB-G4-SlD" firstAttribute="top" secondItem="foS-PP-f2t" secondAttribute="bottom" constant="28" id="pYO-DZ-cEr"/>
                             <constraint firstItem="iKv-lL-wv3" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="pcD-Gf-ZEy"/>
@@ -58,12 +73,13 @@
                     <connections>
                         <outlet property="loginButton" destination="iKv-lL-wv3" id="Ngo-eH-nHk"/>
                         <outlet property="loginTF" destination="foS-PP-f2t" id="e0y-oQ-UrI"/>
+                        <outlet property="messageUIV" destination="w3e-PD-Fw5" id="Cg9-ks-bCI"/>
                         <outlet property="passwordTF" destination="JtB-G4-SlD" id="O50-hW-2nj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-488" y="103"/>
+            <point key="canvasLocation" x="-488.40579710144931" y="102.45535714285714"/>
         </scene>
         <!--Employee TableVC-->
         <scene sceneID="PE5-qZ-iqP">
@@ -74,27 +90,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EmployeeCell" rowHeight="100" id="i56-nw-obw" customClass="EmployeeCell" customModule="PortalCityAds" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="100"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EmployeeCell" rowHeight="80" id="i56-nw-obw" customClass="EmployeeCell" customModule="PortalCityAds" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i56-nw-obw" id="KH2-Xo-T3D">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="G7Y-9o-pcA">
-                                            <rect key="frame" x="5" y="6.5" width="90" height="87.5"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="G7Y-9o-pcA">
+                                            <rect key="frame" x="5" y="6.5" width="70" height="70"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="G7Y-9o-pcA" secondAttribute="height" multiplier="1:1" id="ctN-Xj-BQi"/>
+                                                <constraint firstAttribute="width" secondItem="G7Y-9o-pcA" secondAttribute="height" multiplier="1:1" constant="-2.5" id="ctN-Xj-BQi"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oiW-c1-U7b">
-                                            <rect key="frame" x="105" y="11" width="289" height="21"/>
+                                            <rect key="frame" x="85" y="11" width="309" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Job name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxB-hE-zZj">
-                                            <rect key="frame" x="105" y="40" width="282" height="18"/>
+                                            <rect key="frame" x="85" y="40" width="302" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
@@ -107,7 +123,7 @@
                                         <constraint firstItem="dxB-hE-zZj" firstAttribute="top" secondItem="oiW-c1-U7b" secondAttribute="bottom" constant="8" symbolic="YES" id="Lz0-O5-Sfl"/>
                                         <constraint firstItem="G7Y-9o-pcA" firstAttribute="leading" secondItem="KH2-Xo-T3D" secondAttribute="leading" constant="5" id="PKb-Pi-rQu"/>
                                         <constraint firstItem="oiW-c1-U7b" firstAttribute="trailing" secondItem="KH2-Xo-T3D" secondAttribute="trailingMargin" id="Ryo-z2-xXT"/>
-                                        <constraint firstAttribute="bottom" secondItem="G7Y-9o-pcA" secondAttribute="bottom" constant="5" id="Tnl-o0-Kei"/>
+                                        <constraint firstAttribute="bottom" secondItem="G7Y-9o-pcA" secondAttribute="bottom" constant="2.5" id="Tnl-o0-Kei"/>
                                         <constraint firstAttribute="trailing" secondItem="dxB-hE-zZj" secondAttribute="trailing" constant="27" id="WhF-rV-ASj"/>
                                         <constraint firstItem="oiW-c1-U7b" firstAttribute="top" secondItem="KH2-Xo-T3D" secondAttribute="topMargin" id="b6L-fj-w3T"/>
                                         <constraint firstItem="G7Y-9o-pcA" firstAttribute="top" secondItem="KH2-Xo-T3D" secondAttribute="top" constant="5" id="u80-vE-d7s"/>
@@ -274,6 +290,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="CAlogo" width="180" height="180"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="person.3" catalog="system" width="128" height="62"/>
         <systemColor name="systemBackgroundColor">
