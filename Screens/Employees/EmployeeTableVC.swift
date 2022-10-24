@@ -14,6 +14,7 @@ class EmployeeTableVC: UITableViewController {
     private let searchEmployee = UISearchController(searchResultsController: nil)
     private var employees = [Employee]()
     private var filtredEmployees = [Employee]()
+    private var departmentArray = [String]()
     private var searchBarisempty: Bool {
         guard let text = searchEmployee.searchBar.text else {
             return false
@@ -41,30 +42,37 @@ class EmployeeTableVC: UITableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return departmentArray.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return  isSearching ? filtredEmployees.count : employees.count
+        let array = isSearching ? filtredEmployees : employees
+        let department = departmentArray[section]
+        
+//        return  isSearching ? filtredEmployees.count : employees.count
+        return getCountofSection(sectionName: department, array: array)
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: EmployeeCell.id, for: indexPath) as? EmployeeCell else {return UITableViewCell()}
-        
-        let item = isSearching ? filtredEmployees[indexPath.row] : employees[indexPath.row]
+        let item = getItem(with: indexPath)
         cell.setupItem(employee: item)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let section = departmentArray[section]
+        return section
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showEmployeeDetail" {
             if let vc = segue.destination as? EmployeeCardVC {
                 if let index = self.tableView.indexPathForSelectedRow {
-                    let item = isSearching ? filtredEmployees[index.row] : employees[index.row]
-                    vc.item = item
+                    vc.item = getItem(with: index)
                 }
             }
         }
@@ -81,6 +89,7 @@ extension EmployeeTableVC: UISearchResultsUpdating {
         filtredEmployees = employees.filter({(employee: Employee) -> Bool in
             return employee.name.lowercased().contains(searchText.lowercased()) || employee.jobName.lowercased().contains(searchText.lowercased())
         })
+        fillDepartmentsAraay()
         tableView.reloadData()
     }
     
@@ -96,6 +105,7 @@ extension EmployeeTableVC {
                 DispatchQueue.main.async {
                     self?.employees = convertEmployeeResult(employeeCodable: result.data)
                     self?.getImages()
+                    self?.fillDepartmentsAraay()
                     self?.tableView.reloadData()
                 }
                 
@@ -124,4 +134,52 @@ extension EmployeeTableVC {
             
         }
     }
+    
+    private func fillDepartmentsAraay() {
+        departmentArray.removeAll()
+        let array = isSearching ? filtredEmployees : employees
+        for employee in array {
+            let index = departmentArray.firstIndex(of: employee.department)
+            if index == nil {
+                departmentArray.append(employee.department)
+            }
+        }
+    }
+    
+    private func getCountofSection(sectionName: String, array: [Employee]) -> Int {
+        
+        var result = 0
+        
+        for item in array {
+            if item.department == sectionName {
+                result += 1
+            }
+        }
+        
+        return result
+    }
+    
+    private func getEmployees(from employees : [Employee], with department: String) -> [Employee] {
+        
+        var result : [Employee] = []
+        
+        for item in employees {
+            if item.department == department {
+                result.append(item)
+            }
+        }
+        
+        return result
+    }
+    
+    private func getItem(with index: IndexPath) -> Employee {
+        
+        let array = isSearching ? filtredEmployees: employees
+        let section = departmentArray[index.section]
+        let arrayForSearch = getEmployees(from: array, with: section)
+        let item = arrayForSearch[index.row]
+        
+        return item
+    }
+    
 }

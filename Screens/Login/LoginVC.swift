@@ -1,10 +1,14 @@
+//
+//  LoginVC2.swift
+//  PortalCityAds
+//
+//  Created by  Pavel Chilin on 23.10.2022.
+//
 
 import UIKit
 
-class LoginScVC: UIViewController {
-    
-//    @IBOutlet var login = UITextField!
-    
+class LoginVC: UIViewController {
+
     @IBOutlet weak var loginTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -25,6 +29,7 @@ class LoginScVC: UIViewController {
         let networkService = NetworkService()
         loginTF.isEnabled = false
         passwordTF.isEnabled = false
+        loginButton.isEnabled = false
         
         
         networkService.login(login: login, password: password){ [weak self] result in
@@ -39,20 +44,14 @@ class LoginScVC: UIViewController {
                 self?.present(mainVC, animated: true)
                 
             } else {
-                self?.view.showToast(toastMessage: result.message, duration: 3)
-//                let alert = UIAlertController(title: "My Alert", message: "This is an alert.", preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-//                NSLog("The \"OK\" alert occured.")
-//                }))
-//                self?.present(alert, animated: true, completion: nil)
-                //self?.loginTF
+                self?.messageUIV.showToast(toastMessage: result.message, duration: 3)
             }
             self?.loginTF.isEnabled = true
             self?.passwordTF.isEnabled = true
+            self?.loginButton.isEnabled = true
             
         }
         
     }
-    
-}
 
+}

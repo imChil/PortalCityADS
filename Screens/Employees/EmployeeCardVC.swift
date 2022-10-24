@@ -78,6 +78,12 @@ class EmployeeCardVC: UIViewController {
             self.avatarImage.image = image
         }
         
+        self.avatarImage.layer.borderWidth = 5
+        self.avatarImage.layer.cornerRadius = 20
+        self.avatarImage.layer.masksToBounds = false
+        self.avatarImage.layer.borderColor = UIColor.systemCyan.cgColor
+        self.avatarImage.clipsToBounds = true
+        
     }
 
 }

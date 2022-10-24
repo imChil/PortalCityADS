@@ -20,7 +20,7 @@ class EmployeeCell: UITableViewCell {
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var jobName: UILabel!
     
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -31,6 +31,10 @@ class EmployeeCell: UITableViewCell {
         self.name.text = employee.name
         self.jobName.text = employee.jobName
         self.avatarImage.image = employee.avatar
+        self.avatarImage.makeRounded()
+        self.avatarImage.layer.borderColor = UIColor.systemCyan.cgColor
+        self.avatarImage.layer.borderWidth = 5
+
     }
     
 }
